@@ -2,6 +2,7 @@ const express=require('express');
 const app=express();
 const path=require('path')
 const session=require('express-session')
+const flash = require('connect-flash');
 
 /**setting */
 app.set('views', path.join(__dirname, 'views'));
@@ -15,6 +16,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+app.use(flash())
 
 /**init sever */
 

@@ -6,16 +6,16 @@ router.get('/', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-    req.session.my_variable = req.body;
+    req.flash('user', req.body);
     res.redirect('/profile'); 
 });
 
 router.get('/profile', (req, res) => {
-    const userData=req.session.my_variable; 
-    delete req.session.userData;/**esta es la funcion una sesion, register le paso datos a profile,
+    const user=req.flash('user')[0]/**esta es la funcion una sesion, register le paso datos a profile,
     datos que luego se borraran*/
+    /**nos referimos al valor cero porque ha un solo dato, si pasara mas de uno deberiamos recorrerlo*/
     res.render('profile.ejs', {
-        userData
+        user
     });
 });
 

@@ -39,3 +39,29 @@ ya la tenemos en otro pagina, ahora simplemente lo pintamos:
 
 el problema es que en esta estructura de codigo cada vez que queramos pasar una sesion debemos guardarla, enviarla, recibirla, y luego borrarla, una herramienta que nos facilita esto es connect-flash
 
+const express = require('express');
+const router = express.Router();
+const flash = require('connect-flash');
+
+// Debes configurar express-session antes de usar connect-flash
+// ...
+
+router.use(flash());
+
+router.get('/', (req, res) => {
+    res.render('home.ejs');
+});
+
+router.post('/register', (req, res) => {
+    console.log(req.body);
+    req.flash('success', 'Registration successful!'); // Mensaje flash
+    req.session.my_variable = 'hello session';
+    res.redirect('/profile');
+});
+
+router.get('/profile', (req, res) => {
+    console.log(req.session.my_variable);
+    res.render('profile.ejs', { message: req.flash('success') }); // Pasar el mensaje flash a la vista
+});
+
+module.exports = router;
